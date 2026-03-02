@@ -21,7 +21,7 @@ A Skill's value is its **knowledge delta** — the gap between what it provides 
 | **Activation** | Claude knows but often overlooks   | Keep if brief — serves as reminder    |
 | **Redundant**  | Claude definitely knows this       | Delete — wastes tokens                |
 
-Good Skills maximize Expert content, use Activation sparingly, eliminate Redundant ruthlessly.
+Good Skills maximize `Expert` content, use `Activation` sparingly, and eliminate `Redundant` ruthlessly.
 
 ## Evaluation Dimensions (120 points)
 
@@ -42,7 +42,7 @@ Good Skills maximize Expert content, use Activation sparingly, eliminate Redunda
 
 Read the target SKILL.md completely. For each section ask: "Does Claude already know this?"
 
-Mark sections: **[E]**xpert / **[A]**ctivation / **[R]**edundant
+Mark sections: `**[E]**xpert` / `**[A]**ctivation` / `**[R]**edundant`
 
 Target ratio: >70% Expert, <20% Activation, <10% Redundant
 
@@ -67,7 +67,7 @@ Check:
 
 ### Step 3: Quality Assessment
 
-Evaluate anti-patterns, freedom calibration, pattern fit, and usability.
+Evaluate antipatterns, freedom calibration, pattern fit, and usability.
 
 -> Load [d3-anti-patterns.md](reference/d3-anti-patterns.md) for NEVER list evaluation
 -> Load [d6-freedom-calibration.md](reference/d6-freedom-calibration.md) for freedom spectrum
