@@ -1,6 +1,6 @@
 ---
-description: "Render flowcharts — extracts dot blocks from a skill and renders to SVG. Use --combine for a single combined diagram."
-argument-hint: "[skill-name | path] [--combine]"
+description: 'Render flowcharts — extracts dot blocks from a skill and renders to SVG. Use --combine for a single combined diagram.'
+argument-hint: '[skill-name | path] [--combine]'
 allowed-tools: Bash, Read, Glob
 model: sonnet
 ---

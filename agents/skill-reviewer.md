@@ -37,6 +37,7 @@ bash ${CLAUDE_PLUGIN_ROOT}/scripts/validate-skill.sh <skill-path>
 ```
 
 Then load `${CLAUDE_PLUGIN_ROOT}/skills/skill-quality/references/lint-spec.md` and verify:
+
 - Description routing quality (trigger phrases + negative routing)
 - Content quality (no personas, ASCII art, decorative quotes)
 - Self-containment (no external file references)
@@ -51,6 +52,7 @@ bash ${CLAUDE_PLUGIN_ROOT}/scripts/detect-fluff.sh <skill-path>/SKILL.md
 ```
 
 Then load `${CLAUDE_PLUGIN_ROOT}/skills/skill-quality/references/prose-rules.md` and check:
+
 - Active voice usage
 - Positive form
 - Concrete language
@@ -60,6 +62,7 @@ Then load `${CLAUDE_PLUGIN_ROOT}/skills/skill-quality/references/prose-rules.md`
 ## 3. Compliance
 
 Load `${CLAUDE_PLUGIN_ROOT}/skills/skill-quality/references/compliance-framework.md` and check:
+
 - Classify skill type (Discipline / Guidance / Collaborative / Reference)
 - Verify expected principles are present for that type
 - Check loophole defenses (discipline skills only)
@@ -74,15 +77,19 @@ Return a structured report:
 **Overall:** {PASS | NEEDS WORK | FAIL}
 
 ### Structure: {P/W/F}
+
 {findings}
 
 ### Prose: {P/W/F}
+
 {findings}
 
 ### Compliance: {P/W/F}
+
 {findings}
 
 ### Priority Fixes
+
 1. {highest impact fix}
 2. {next fix}
 ```

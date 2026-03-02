@@ -36,11 +36,11 @@ Strip trailing slashes. Validate the resolved path contains `SKILL.md` before pr
 
 ### Discovery Paths
 
-| Scope     | Glob pattern |
-|-----------|-------------|
-| project   | `.claude/skills/*/SKILL.md` |
-| global    | `~/.claude/skills/*/SKILL.md` |
-| plugin    | Installed plugin `skills/*/SKILL.md` paths |
+| Scope   | Glob pattern                               |
+| ------- | ------------------------------------------ |
+| project | `.claude/skills/*/SKILL.md`                |
+| global  | `~/.claude/skills/*/SKILL.md`              |
+| plugin  | Installed plugin `skills/*/SKILL.md` paths |
 
 ## Flowcharts
 
@@ -70,14 +70,14 @@ Render flowcharts to SVG with `/skill-tools:graph`.
 
 ## Commands
 
-| Command | Purpose | Modifies files? |
-|---------|---------|----------------|
-| `/skill-tools:lint` | Structural and content quality review | No |
-| `/skill-tools:audit` | Full quality audit — structure, prose, compliance, scope | No |
-| `/skill-tools:improve` | Full audit then fix each finding interactively | Yes |
-| `/skill-tools:adapt` | Fork and specialize a skill | Yes |
-| `/skill-tools:deduplicate` | Find overlap across skills | No |
-| `/skill-tools:graph` | Render flowcharts to SVG | No |
+| Command                    | Purpose                                                  | Modifies files? |
+| -------------------------- | -------------------------------------------------------- | --------------- |
+| `/skill-tools:lint`        | Structural and content quality review                    | No              |
+| `/skill-tools:audit`       | Full quality audit — structure, prose, compliance, scope | No              |
+| `/skill-tools:improve`     | Full audit then fix each finding interactively           | Yes             |
+| `/skill-tools:adapt`       | Fork and specialize a skill                              | Yes             |
+| `/skill-tools:deduplicate` | Find overlap across skills                               | No              |
+| `/skill-tools:graph`       | Render flowcharts to SVG                                 | No              |
 
 ## Reference Files
 

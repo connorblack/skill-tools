@@ -1,6 +1,6 @@
 ---
-description: "Audit and fix — runs full quality audit then fixes each finding interactively. To review without modifying use /skill-tools:audit."
-argument-hint: "[skill-name | path]"
+description: 'Audit and fix — runs full quality audit then fixes each finding interactively. To review without modifying use /skill-tools:audit.'
+argument-hint: '[skill-name | path]'
 allowed-tools: Bash, Read, Glob, Grep, Edit, Write, AskUserQuestion
 ---
 
@@ -19,6 +19,7 @@ Do not proceed until you have read every file.
 Examine the skill against every rule in each criteria file. Cite line numbers and quote text for every finding. Cover structure (lint-spec.md), prose quality (prose-rules.md), compliance (compliance-framework.md), and flowcharts (graphviz-conventions.dot).
 
 After completing your analysis, run both scripts as supplementary cross-checks:
+
 - `bash ${CLAUDE_PLUGIN_ROOT}/scripts/validate-skill.sh <resolved-path>`
 - `bash ${CLAUDE_PLUGIN_ROOT}/scripts/detect-fluff.sh <resolved-path>/SKILL.md`
 
@@ -37,11 +38,13 @@ For each finding:
 3. Apply the fix using Edit tool
 
 Self-containment violations:
+
 - External file references → move the referenced content into `references/` within the skill directory
 - Wrong invocation syntax → fix to `/plugin-name:command-name` format
 - Dangling concept references → embed the definition or remove the reference
 
 Prose violations:
+
 - Passive voice → rewrite in active voice
 - Negative instructions → restate positively
 - Bloated phrases → replace with concise alternatives

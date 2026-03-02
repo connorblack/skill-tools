@@ -1,6 +1,6 @@
 ---
-description: "Find skill overlap — scans installed skills for redundancy and suggests consolidation."
-argument-hint: "[project | global | plugin | all]"
+description: 'Find skill overlap — scans installed skills for redundancy and suggests consolidation.'
+argument-hint: '[project | global | plugin | all]'
 allowed-tools: Bash, Read, Glob, Grep, AskUserQuestion
 ---
 
@@ -10,12 +10,12 @@ Scan for skill overlap across the specified scope ($ARGUMENTS, default "all").
 
 Find all `SKILL.md` files based on scope:
 
-| Scope   | Paths                                                    |
-|---------|----------------------------------------------------------|
-| project | `.claude/skills/*/SKILL.md`                              |
-| global  | `~/.claude/skills/*/SKILL.md`                            |
-| plugin  | Installed plugin `skills/*/SKILL.md` paths               |
-| all     | All of the above                                         |
+| Scope   | Paths                                      |
+| ------- | ------------------------------------------ |
+| project | `.claude/skills/*/SKILL.md`                |
+| global  | `~/.claude/skills/*/SKILL.md`              |
+| plugin  | Installed plugin `skills/*/SKILL.md` paths |
+| all     | All of the above                           |
 
 Collect per skill: name, level, source (plugin name or project/global), line count, description.
 

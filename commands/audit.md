@@ -46,7 +46,9 @@ Read through the SKILL.md line by line applying each rule from prose-rules.md:
 **Concrete language** — Find vague action steps ("consider", "think about", "be careful"). Quote each with line number. WARN per instance.
 
 <!-- vale off -->
+
 **Concise expression** — Find bloated phrases ("in order to", "at this point in time", "due to the fact that"). Quote each with line number. INFO per instance, WARN if 3+ of same pattern.
+
 <!-- vale on -->
 
 **Token waste** — Search for attribution signals, decorative quotes, redundant explanations per the patterns in prose-rules.md. Quote each with line number.
