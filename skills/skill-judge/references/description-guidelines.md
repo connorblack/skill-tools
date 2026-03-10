@@ -2,11 +2,11 @@
 
 The `description` field enables Skill discovery and MUST include both **what the Skill does** and **when to use it**.
 
-Always write in **third person**. The description is injected into the system prompt, and inconsistent point-of-view can cause discovery problems.
+Write the description as concise routing metadata rather than first-person assistant chat or marketing copy.
 
-Good: `Processes Excel files and generates reports`  
-Avoid: `I can help you process Excel files`  
-Avoid: `You can use this to process Excel files`
+Good: `Processes Excel files and generates reports. Use when working with spreadsheets or xlsx files.`
+Avoid: `I can help you process Excel files`
+Avoid: `Powerful spreadsheet toolkit for every possible workflow`
 
 Be specific and include key terms. Include both what the Skill does and specific triggers/contexts for when to use it.
 

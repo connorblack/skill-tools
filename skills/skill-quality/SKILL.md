@@ -10,13 +10,16 @@ Apply these checks when creating or modifying skills.
 
 ## Quick Checklist
 
-1. Name follows `^[a-z][a-z0-9]*(-[a-z0-9]+)*(?::[a-z][a-z0-9]*(-[a-z0-9]+)*)*$`; final segment matches directory
+1. Name follows `^[a-z][a-z0-9]*(-[a-z0-9]+)*$`; explicit `name` matches directory
 2. Description includes trigger phrases AND negative routing ("Not for X — use Y")
 3. No persona statements, attribution, or decorative quotes
 4. Under 500 lines
 5. Self-contained — no references to files outside the skill directory
 6. Imperative form in body ("Run X" not "You should run X")
 7. Subdirectories limited to `scripts/`, `references/`, `assets/`
+
+For plugin skills, the namespace appears in slash invocation (`/skill-tools:lint`), not in the `name:` field inside `SKILL.md`.
+Legacy namespaced `name:` values may still exist in older plugins; treat them as migration debt, not the preferred pattern.
 
 ## Skill Resolution
 

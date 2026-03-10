@@ -12,7 +12,7 @@ For agent targets:
 
 - Keep the best-practice ideas that survive the host boundary: concise routing metadata, clear workflows, predictable structure, progressive disclosure where available, and explicit verification loops.
 - Do **NOT** deduct just because the agent lacks two-field `SKILL.md` frontmatter, a sub-500-line `SKILL.md` body, or one-level-deep `SKILL.md` references.
-- Treat host-native routing fields such as `description` and `whenToUse` as the metadata surface for activation.
+- Treat `description` as the primary routing field for current Claude Code agents. If another host adds extra routing metadata such as `whenToUse`, note it as host-specific rather than current Claude Code spec.
 
 For conceptual background on how Skills work, see the [Skills overview](/en/docs/agents-and-tools/agent-skills/overview).
 
@@ -197,11 +197,11 @@ Consistent naming makes it easier to:
 The `description` field enables Skill discovery and should include both what the Skill does and when to use it.
 
 <Warning>
-  **Always write in third person**. The description is injected into the system prompt, and inconsistent point-of-view can cause discovery problems.
+  Write descriptions as concise routing metadata, not marketing copy.
 
-- **Good:** "Processes Excel files and generates reports"
+- **Good:** "Processes Excel files and generates reports. Use when working with spreadsheets or xlsx files."
 - **Avoid:** "I can help you process Excel files"
-- **Avoid:** "You can use this to process Excel files"
+- **Avoid:** "Powerful spreadsheet toolkit for every possible workflow"
   </Warning>
 
 **Be specific and include key terms**. Include both what the Skill does and specific triggers/contexts for when to use it.
@@ -280,7 +280,7 @@ pdf/
 
 ````markdown theme={null}
 ---
-name: PDF Processing
+name: pdf-processing
 description: Extracts text and tables from PDF files, fills forms, and merges documents. Use when working with PDF files or when the user mentions PDFs, forms, or document extraction.
 ---
 
@@ -1127,7 +1127,7 @@ reader = PdfReader("file.pdf")
 
 ### YAML frontmatter requirements
 
-The SKILL.md frontmatter includes only `name` (64 characters max) and `description` (1024 characters max) fields. See the [Skills overview](/en/docs/agents-and-tools/agent-skills/overview#skill-structure) for complete structure details.
+Claude Code currently documents these skill fields: `name`, `description`, `argument-hint`, `disable-model-invocation`, `user-invocable`, `allowed-tools`, `model`, `context`, `agent`, and `hooks`. `name` is optional and must use lowercase letters, numbers, and hyphens when present. `description` is recommended and should explain what the skill does and when to use it.
 
 ### Token budgets
 

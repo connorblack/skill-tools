@@ -2,7 +2,7 @@
 
 Use consistent naming patterns to make Skills easier to reference and discuss. We recommend using **gerund form** (verb + `-ing`) for Skill names, as this clearly describes the activity or capability the Skill provides.
 
-Remember that the `name` field may use optional namespace prefixes separated by `:`. Each segment must stay lowercase and may contain numbers and hyphens. The final segment should match the directory name.
+In current Claude Code skill frontmatter, `name` is a single lowercase, hyphenated identifier. Plugin namespace is added at invocation time (`/plugin-name:skill-name`), not by putting `:` into the `name` field.
 
 ## Good naming examples (gerund form)
 
@@ -11,14 +11,11 @@ Remember that the `name` field may use optional namespace prefixes separated by 
 - `managing-databases`
 - `testing-code`
 - `writing-documentation`
-- `tools:processing-pdfs`
-- `search:analyzing-spreadsheets`
 
 ## Acceptable alternatives
 
 - Noun phrases: `pdf-processing`, `spreadsheet-analysis`
 - Action-oriented: `process-pdfs`, `analyze-spreadsheets`
-- Namespaced collections: `tools:pdf-processing`, `search:codebase-search`
 
 ## Avoid
 

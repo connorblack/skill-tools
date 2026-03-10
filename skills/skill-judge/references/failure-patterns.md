@@ -63,7 +63,7 @@ Example:
 
 **Symptom**: Triggering information lives only in the body, not in the host's routing metadata
 **Root cause**: Misunderstanding of three-layer loading
-**Fix**: Move triggering information into the host's activation surface: `description` for Skills, `description`, `whenToUse`, or equivalent routing metadata for agents. The body is only loaded AFTER the routing decision is made.
+**Fix**: Move triggering information into the host's activation surface: `description` for Skills, `description` for current Claude Code agents, or the host's documented routing field for other agent systems. The body is only loaded AFTER the routing decision is made.
 
 ## Pattern 8: The Over-Engineered
 

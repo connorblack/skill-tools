@@ -1,5 +1,5 @@
 #!/bin/bash
-# Skill Linter - Validates skills against agentskills.io specification
+# Skill Linter - Validates current Claude Code skill frontmatter plus local collection rules
 # Usage: ./validate-skill.sh path/to/skill-directory
 
 set -euo pipefail
@@ -94,10 +94,19 @@ if [ "$NAME_LEN" -lt 1 ] || [ "$NAME_LEN" -gt 64 ]; then
   exit 3
 fi
 
-# Check name pattern: lowercase alphanumeric segments with optional namespaces
-# Each segment must not start/end with hyphen or contain consecutive hyphens
-NAME_REGEX='^[a-z][a-z0-9]*(-[a-z0-9]+)*(:[a-z][a-z0-9]*(-[a-z0-9]+)*)*$'
-if ! echo "$NAME" | grep -qE "$NAME_REGEX"; then
+# Check name pattern: current Claude Code prefers lowercase alphanumeric with
+# internal hyphens only. Legacy namespaced forms are tolerated with a warning.
+CURRENT_NAME_REGEX='^[a-z][a-z0-9]*(-[a-z0-9]+)*$'
+LEGACY_NAME_REGEX='^[a-z][a-z0-9]*(-[a-z0-9]+)*(:[a-z][a-z0-9]*(-[a-z0-9]+)*)+$'
+NAME_MATCH_TARGET="$NAME"
+
+if echo "$NAME" | grep -qE "$CURRENT_NAME_REGEX"; then
+  pass "Name '$NAME' valid ($NAME_LEN chars)"
+elif echo "$NAME" | grep -qE "$LEGACY_NAME_REGEX"; then
+  NAME_MATCH_TARGET="${NAME##*:}"
+  warn "Name '$NAME' uses legacy namespace syntax; current Claude Code docs prefer plain names and slash-time plugin namespaces"
+  pass "Legacy namespaced name '$NAME' structurally valid ($NAME_LEN chars)"
+else
   # More specific error messages
   if echo "$NAME" | grep -q '::'; then
     fail "Name cannot contain empty namespace segments: $NAME"
@@ -112,20 +121,22 @@ if ! echo "$NAME" | grep -qE "$NAME_REGEX"; then
   elif echo "$NAME" | grep -qE -- '[_]'; then
     fail "Name cannot contain underscores (use hyphens): $NAME"
   else
-    fail "Name must match pattern $NAME_REGEX: $NAME"
+    fail "Name must match current pattern $CURRENT_NAME_REGEX or legacy pattern $LEGACY_NAME_REGEX: $NAME"
   fi
   exit 3
 fi
-pass "Name '$NAME' valid ($NAME_LEN chars)"
 
-# 5. Check final name segment matches directory
+# 5. Check name matches directory
 DIR_NAME=$(basename "$SKILL_DIR")
-NAME_TAIL="${NAME##*:}"
-if [ "$NAME_TAIL" != "$DIR_NAME" ]; then
-  fail "Final name segment '$NAME_TAIL' does not match directory name '$DIR_NAME'"
+if [ "$NAME_MATCH_TARGET" != "$DIR_NAME" ]; then
+  if [ "$NAME_MATCH_TARGET" = "$NAME" ]; then
+    fail "Name '$NAME' does not match directory name '$DIR_NAME'"
+  else
+    fail "Final name segment '$NAME_MATCH_TARGET' does not match directory name '$DIR_NAME'"
+  fi
   exit 3
 fi
-pass "Final name segment matches directory"
+pass "Name matches directory"
 
 # 6. Validate description field
 # Handle multi-line descriptions

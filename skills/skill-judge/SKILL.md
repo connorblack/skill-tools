@@ -1,6 +1,6 @@
 ---
-name: skills:skill-judge
-description: Evaluate Agent Skill design quality against Anthropic specifications, persuasion research, and expert-knowledge principles. Use when reviewing, auditing, scoring, or improving SKILL.md files, skill packages, or agent prompt files. When the target is an agent file, adjust skill-only rubric checks to the agent's native format and report the normalization. Provides 10-dimension scoring (150 points) with actionable improvements.
+name: skill-judge
+description: Evaluate Agent Skill design quality against current Claude Code skill and subagent specifications, persuasion research, and expert-knowledge principles. Use when reviewing, auditing, scoring, or improving SKILL.md files, skill packages, or agent prompt files. When the target is an agent file, adjust skill-only rubric checks to the agent's native format and report the normalization. Provides 10-dimension scoring (150 points) with actionable improvements.
 ---
 
 # Skill Judge
@@ -56,14 +56,17 @@ Ordered by impact on skill effectiveness:
 Before scoring, determine whether the target is a **skill** or an **agent**.
 
 - **Skill**: `SKILL.md` file or skill directory. Use the rubric directly.
-- **Agent**: standalone agent prompt file, often under `agents/`, with host-specific metadata such as `tools:`, `model:`, `color:`, `skills:`, or `whenToUse:`.
+- **Agent**: standalone agent prompt file, often under `agents/`, with agent metadata such as `description:`, `tools:`, `model:`, `skills:`, `permissionMode:`, `mcpServers:`, or host-specific extras.
 
 For agent targets:
 
 - Keep D1-D6 and D10 fully in play. Agents still have knowledge delta, persuasion, mindset, usability, freedom, and pattern quality.
 - Translate D7-D9 to the host format instead of treating missing `SKILL.md` conventions as defects.
 - For D7, apply portable authoring principles such as concise routing metadata, clear workflows, verification loops, and predictable structure. Do **NOT** reintroduce `SKILL.md`-only packaging requirements through the best-practices check.
+- If the file is a current Claude Code subagent, use the documented subagent field set: `name`, `description`, `tools`, `disallowedTools`, `model`, `permissionMode`, `maxTurns`, `skills`, `mcpServers`, `hooks`, `memory`, `background`, `isolation`.
+- If the file belongs to another or older host, separate current Claude Code spec from host-native extras. Fields such as `color` or `whenToUse` may exist in local tooling, but they are not part of the current Claude Code subagent frontmatter table.
 - Do **NOT** deduct just because the file uses agent-native frontmatter or ships as a single prompt file instead of a `SKILL.md` package.
+- Do **NOT** count host-specific extras as Claude Code spec compliance unless the host's own docs make them first-class fields.
 - Do **NOT** require skill-only checks with no agent analogue, such as directory-name matches or one-level-deep skill references, unless the host actually uses those concepts.
 - State the adjustment explicitly in the report. This is a rubric normalization, not a reason to re-run the evaluation from scratch.
 
@@ -108,6 +111,7 @@ For agent targets, translate skill-package checks into agent equivalents:
 
 - native frontmatter quality and routing clarity
 - tool/runtime surface matches the job
+- distinguish documented Claude Code fields from host-specific extras
 - supporting references are discoverable in the host's actual structure
 - packaging fits the host instead of forcing `SKILL.md`-specific rules
 
@@ -159,6 +163,7 @@ If the target is an agent file, include the artifact type and the normalization 
 - **NEVER** assume all procedures are valuable — distinguish domain-specific from generic
 - **NEVER** score D2 high just because it uses strong language — check principle-to-skill-type match
 - **NEVER** skip the Anthropic best practices check — official docs define the ground truth
+- **NEVER** call documented Claude Code fields non-standard just because older two-field summaries omitted them
 - **NEVER** deduct agent files just for using native agent metadata or host-specific packaging
 
 ## The Meta-Question

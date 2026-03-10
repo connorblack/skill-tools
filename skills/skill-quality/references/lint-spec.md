@@ -1,32 +1,39 @@
 # Skill Lint Specification
 
-Structural validation rules for the agentskills.io skill format.
+Local structural validation rules for Claude Code skills plus the skill-tools collection's naming policy.
 
 ## Required Frontmatter
 
 | Field         | Constraints                                                                                                             |
 | ------------- | ----------------------------------------------------------------------------------------------------------------------- |
-| `name`        | 1-64 chars, lowercase hyphenated segments with optional namespace prefixes separated by `:`, no empty segments, final segment must match parent directory name |
+| `name`        | Local policy: explicit `name` required, 1-64 chars, current preferred form is lowercase letters/numbers/hyphens; legacy namespaced names are tolerated only for backward compatibility |
 | `description` | 1-1024 chars, non-empty, should include keywords for discoverability                                                    |
 
 ## Optional Frontmatter
 
 | Field                      | Constraints                                                |
 | -------------------------- | ---------------------------------------------------------- |
-| `compatibility`            | 1-500 chars, environment requirements                      |
-| `metadata`                 | Key-value pairs (string values only)                       |
+| `argument-hint`            | Short autocomplete hint for expected arguments             |
 | `allowed-tools`            | Space-delimited tool list (FAIL on commas or array syntax) |
 | `disable-model-invocation` | Boolean. `true` = Claude cannot auto-load                  |
 | `user-invocable`           | Boolean. `false` = hidden from `/` menu                    |
 | `model`                    | `haiku`, `sonnet`, or `opus`                               |
 | `context`                  | `fork` to run in isolated subagent context                 |
 | `agent`                    | Subagent type when `context: fork`                         |
+| `hooks`                    | Hook configuration block                                   |
+
+## Host Notes
+
+- Claude Code can infer `name` from the directory if omitted, but this collection requires an explicit `name`.
+- Plugin namespace belongs in slash invocation (`/plugin-name:skill-name`), not in the preferred `name:` field.
+- Legacy namespaced `name:` values are tolerated by the linter during migration, but should be treated as compatibility debt rather than the target format.
+- Legacy open-standard extras such as `compatibility` may exist in other repos, but they are not part of the current Claude Code skill frontmatter table.
 
 ## Structure Requirements
 
 | Rule           | Requirement                                                         |
 | -------------- | ------------------------------------------------------------------- |
-| Directory name | Must match the final `name` segment exactly (`tools:pdf` -> `pdf`) |
+| Directory name | Must match explicit `name`, or the final segment for legacy namespaced names |
 | SKILL.md       | Required, must exist                              |
 | Line limit     | Max 500 lines in SKILL.md                         |
 | Subdirectories | Only `scripts/`, `references/`, `assets/` allowed |
@@ -34,10 +41,11 @@ Structural validation rules for the agentskills.io skill format.
 ## Name Pattern
 
 ```regex
-^[a-z][a-z0-9]*(-[a-z0-9]+)*(:[a-z][a-z0-9]*(-[a-z0-9]+)*)*$
+^[a-z][a-z0-9]*(-[a-z0-9]+)*$
 ```
 
-**Valid:** `my-skill`, `skill1`, `api-v2-handler`, `search:codebase-search`, `tools:qsv:data-quality`
+**Valid:** `my-skill`, `skill1`, `api-v2-handler`
+**Legacy tolerated:** `tools:pdf`, `content-engine:deep-research`
 **Invalid:** `-skill`, `skill-`, `my--skill`, `MySkill`, `my_skill`, `tools::pdf`
 
 ## Content Quality Rules

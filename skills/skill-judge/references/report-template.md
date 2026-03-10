@@ -58,7 +58,7 @@ Use this template when generating the evaluation report in Step 6.
 - **Improvement-oriented**: Low scores must include an actionable fix
 - **Dimension weighting**: D1 (Knowledge Delta) carries most weight at 20 points — prioritize it
 - **Description penalty**: If D8 < 10, note that the artifact's routing metadata is unlikely to activate or route correctly in its host
-- **Agent adjustment**: Do not deduct for agent-native metadata such as `tools`, `model`, `color`, `skills`, or `whenToUse`; translate D8 and D9 to the host's agent format instead
+- **Agent adjustment**: Distinguish current Claude Code fields from host-specific extras. Do not deduct for documented agent fields such as `tools`, `skills`, `mcpServers`, or `permissionMode`, and do not silently treat `color` or `whenToUse` as current Claude Code fields
 - **Length is not quality**: A concise 43-line Skill scoring 125/150 outranks a verbose 500-line Skill scoring 95/150
 
 ## Grade Boundaries

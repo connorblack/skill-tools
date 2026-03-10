@@ -4,16 +4,24 @@ Special focus on description quality — the most critical field for Skill disco
 
 ## Agent-file adjustment
 
-This dimension is written for Skills first, but it also applies to agent files.
+This dimension is spec-aware, so identify the target format before scoring.
 
-For agent targets:
+For current Claude Code agent targets:
 
-- Score the file against the host's native metadata contract, not the `SKILL.md` contract.
-- Routing metadata may live in `description`, `whenToUse`, or the host's equivalent activation field. Judge the combined routing surface.
-- Do **NOT** deduct for supported agent fields such as `tools`, `model`, `color`, `skills`, or `whenToUse`.
+- Score the file against the current Claude Code subagent contract, not the `SKILL.md` contract.
+- The documented subagent fields are `name`, `description`, `tools`, `disallowedTools`, `model`, `permissionMode`, `maxTurns`, `skills`, `mcpServers`, `hooks`, `memory`, `background`, and `isolation`.
+- Route primarily through `description`. Only treat other routing fields as first-class when the host explicitly documents them.
+- Do **NOT** deduct for documented agent fields such as `tools`, `disallowedTools`, `skills`, `mcpServers`, `permissionMode`, `background`, or `isolation`.
+- Do **NOT** treat host-specific extras such as `color` or `whenToUse` as part of the Claude Code subagent spec.
 - Do **NOT** deduct for missing `SKILL.md`, directory-name matches, or skill-package reference layout when evaluating a standalone agent file.
 - Do deduct for contradictory routing metadata, vague descriptions, mismatched tool surfaces, or host-specific fields that do not match the agent's actual job.
 - If a check truly has no agent analogue, mark it `N/A` in the notes and explain the normalization in the report.
+
+For other or legacy agent hosts:
+
+- Score against the host's actual contract if it is known.
+- Separate "host-native" from "current Claude Code spec" in the notes.
+- Do not auto-fail an agent just because the host adds extra metadata, but do not count those extras as Claude Code compliance.
 
 ## Scoring
 
@@ -24,35 +32,41 @@ For agent targets:
 | 11-13 | Valid frontmatter, description has WHAT but weak on WHEN               |
 | 14-15 | Perfect: comprehensive description with WHAT + WHEN + trigger keywords |
 
-## Anthropic Frontmatter Requirements
+## Claude Code Skill Frontmatter
 
 These rules apply directly to Skill targets. Translate them to the host's equivalent metadata rules when evaluating agent files.
 
 ### `name` field
 
-- Maximum 64 characters
-- Lowercase namespace/name segments separated by `:`. Each segment may contain numbers and hyphens.
-- Cannot contain XML tags
-- Cannot contain reserved words: `"anthropic"`, `"claude"`
-- Final segment should match the directory name
-- Use **gerund form** (verb + -ing): `processing-pdfs`, `analyzing-spreadsheets`, `managing-databases`
-- Acceptable: noun phrases (`pdf-processing`), action-oriented (`process-pdfs`)
-- Namespaced collections are acceptable when the host uses them: `tools:processing-pdfs`, `search:codebase-search`
-- Avoid: vague (`helper`, `utils`, `tools`), overly generic (`documents`, `data`)
+- Optional. If omitted, Claude Code uses the directory name.
+- If present, maximum 64 characters.
+- Lowercase letters, numbers, and hyphens only.
+- Plugin namespace is added by location and slash invocation (`/plugin-name:skill-name`), not by putting `:` in `name:`.
+- Prefer descriptive names over vague placeholders such as `helper`, `utils`, or `tools`.
 
 ### `description` field
 
-- Maximum 1024 characters
-- Non-empty
-- Cannot contain XML tags
-- **Must be written in third person** (injected into system prompt)
-  - Good: "Processes Excel files and generates reports"
-  - Bad: "I can help you process Excel files"
-  - Bad: "You can use this to process Excel files"
+- Recommended. If omitted, Claude Code uses the first paragraph of the markdown body.
+- Maximum 1024 characters when present.
+- Should state what the skill does and when to use it.
+- Include trigger terms users will actually say.
 
-### Only supported fields
+### Documented skill fields
 
-The SKILL.md frontmatter supports only `name` and `description`. Other fields (`version`, `license`, `metadata`, `allowed-tools`) are non-standard.
+Current Claude Code documents these skill fields:
+
+- `name`
+- `description`
+- `argument-hint`
+- `disable-model-invocation`
+- `user-invocable`
+- `allowed-tools`
+- `model`
+- `context`
+- `agent`
+- `hooks`
+
+Fields outside that list are either host-specific extensions or non-standard metadata. Note them explicitly instead of silently treating them as core Claude Code skill fields.
 
 ## Why Description is THE MOST CRITICAL Field
 
@@ -110,12 +124,11 @@ description: Helps with documents
 - [ ] Includes explicit trigger scenarios ("Use when...", "When user asks for...")
 - [ ] Contains searchable keywords (file extensions, domain terms, action verbs)
 - [ ] Specific enough that Agent knows EXACTLY when to use it
-- [ ] Written in third person
 - [ ] Under 1024 characters
 
 ## Additional Spec Checks
 
-- [ ] No unsupported frontmatter fields
+- [ ] Uses documented Claude Code fields, or clearly labels host-specific extras
 - [ ] SKILL.md body under 500 lines
 - [ ] No time-sensitive information (or in "old patterns" collapsed section)
 - [ ] Consistent terminology throughout (one term, not synonyms)
