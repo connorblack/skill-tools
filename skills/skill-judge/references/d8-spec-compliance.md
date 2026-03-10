@@ -32,6 +32,11 @@ For other or legacy agent hosts:
 | 11-13 | Valid frontmatter, description has WHAT but weak on WHEN               |
 | 14-15 | Perfect: comprehensive description with WHAT + WHEN + trigger keywords |
 
+**Field-recognition guardrail:** Do **NOT** deduct D8 points for using
+documented Claude Code skill or subagent fields. D8 deductions here should come
+from invalid format, weak routing metadata, contradictory fields, or
+non-standard fields being treated as if they were part of the documented spec.
+
 ## Claude Code Skill Frontmatter
 
 These rules apply directly to Skill targets. Translate them to the host's equivalent metadata rules when evaluating agent files.
