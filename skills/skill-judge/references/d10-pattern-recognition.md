@@ -1,6 +1,6 @@
-# D7: Pattern Recognition (10 points)
+# D10: Pattern Recognition (10 points)
 
-Does the Skill follow an established design pattern?
+Does the target artifact follow an established design pattern?
 
 ## Scoring
 

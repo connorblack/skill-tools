@@ -6,7 +6,7 @@ Structural validation rules for the agentskills.io skill format.
 
 | Field         | Constraints                                                                                                             |
 | ------------- | ----------------------------------------------------------------------------------------------------------------------- |
-| `name`        | 1-64 chars, lowercase alphanumeric + hyphens, no leading/trailing/consecutive hyphens, must match parent directory name |
+| `name`        | 1-64 chars, lowercase hyphenated segments with optional namespace prefixes separated by `:`, no empty segments, final segment must match parent directory name |
 | `description` | 1-1024 chars, non-empty, should include keywords for discoverability                                                    |
 
 ## Optional Frontmatter
@@ -24,9 +24,9 @@ Structural validation rules for the agentskills.io skill format.
 
 ## Structure Requirements
 
-| Rule           | Requirement                                       |
-| -------------- | ------------------------------------------------- |
-| Directory name | Must match `name` field exactly                   |
+| Rule           | Requirement                                                         |
+| -------------- | ------------------------------------------------------------------- |
+| Directory name | Must match the final `name` segment exactly (`tools:pdf` -> `pdf`) |
 | SKILL.md       | Required, must exist                              |
 | Line limit     | Max 500 lines in SKILL.md                         |
 | Subdirectories | Only `scripts/`, `references/`, `assets/` allowed |
@@ -34,11 +34,11 @@ Structural validation rules for the agentskills.io skill format.
 ## Name Pattern
 
 ```regex
-^[a-z][a-z0-9]*(-[a-z0-9]+)*$
+^[a-z][a-z0-9]*(-[a-z0-9]+)*(:[a-z][a-z0-9]*(-[a-z0-9]+)*)*$
 ```
 
-**Valid:** `my-skill`, `skill1`, `api-v2-handler`
-**Invalid:** `-skill`, `skill-`, `my--skill`, `MySkill`, `my_skill`
+**Valid:** `my-skill`, `skill1`, `api-v2-handler`, `search:codebase-search`, `tools:qsv:data-quality`
+**Invalid:** `-skill`, `skill-`, `my--skill`, `MySkill`, `my_skill`, `tools::pdf`
 
 ## Content Quality Rules
 

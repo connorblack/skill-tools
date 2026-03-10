@@ -1,19 +1,19 @@
 # Common Failure Patterns
 
-When a Skill scores poorly, diagnose the root cause using these patterns.
+When a Skill or agent prompt scores poorly, diagnose the root cause using these patterns.
 
 ## Diagnosis Shortcut
 
 | Observed Symptom                | Likely Pattern         | Primary Dimension          |
 | ------------------------------- | ---------------------- | -------------------------- |
-| SKILL.md > 500 lines            | The Dump (#2)          | D5: Progressive Disclosure |
+| SKILL.md > 500 lines            | The Dump (#2)          | D9: Progressive Disclosure |
 | "What is X" sections            | The Tutorial (#1)      | D1: Knowledge Delta        |
 | No NEVER list                   | The Vague Warning (#5) | D3: Anti-Patterns          |
-| Skill rarely activates          | The Invisible (#6)     | D4: Spec Compliance        |
-| Step 1, 2, 3... only            | The Checkbox (#4)      | D2: Mindset                |
-| References never loaded         | Orphan References (#3) | D5: Progressive Disclosure |
-| README.md, CHANGELOG.md present | Over-Engineered (#8)   | D5: Progressive Disclosure |
-| Triggers only in body           | Wrong Location (#7)    | D4: Spec Compliance        |
+| Artifact rarely activates       | The Invisible (#6)     | D8: Spec Compliance        |
+| Step 1, 2, 3... only            | The Checkbox (#4)      | D4: Mindset                |
+| References never loaded         | Orphan References (#3) | D9: Progressive Disclosure |
+| README.md, CHANGELOG.md present | Over-Engineered (#8)   | D9: Progressive Disclosure |
+| Triggers only in body           | Wrong Location (#7)    | D8: Spec Compliance        |
 | Scripts for creative work       | Freedom Mismatch (#9)  | D6: Freedom Calibration    |
 
 ---
@@ -61,9 +61,9 @@ Example:
 
 ## Pattern 7: The Wrong Location
 
-**Symptom**: "When to use this Skill" information in body, not in description
+**Symptom**: Triggering information lives only in the body, not in the host's routing metadata
 **Root cause**: Misunderstanding of three-layer loading
-**Fix**: Move all triggering information to description field. Body is only loaded AFTER triggering decision is made.
+**Fix**: Move triggering information into the host's activation surface: `description` for Skills, `description`, `whenToUse`, or equivalent routing metadata for agents. The body is only loaded AFTER the routing decision is made.
 
 ## Pattern 8: The Over-Engineered
 

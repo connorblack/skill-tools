@@ -1,4 +1,4 @@
-# D2: Mindset + Appropriate Procedures (15 points)
+# D4: Mindset + Appropriate Procedures (15 points)
 
 Does the Skill transfer expert thinking patterns along with necessary domain-specific procedures?
 

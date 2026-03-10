@@ -1,6 +1,19 @@
-# D4: Specification Compliance (15 points)
+# D8: Specification Compliance (15 points)
 
 Special focus on description quality — the most critical field for Skill discovery.
+
+## Agent-file adjustment
+
+This dimension is written for Skills first, but it also applies to agent files.
+
+For agent targets:
+
+- Score the file against the host's native metadata contract, not the `SKILL.md` contract.
+- Routing metadata may live in `description`, `whenToUse`, or the host's equivalent activation field. Judge the combined routing surface.
+- Do **NOT** deduct for supported agent fields such as `tools`, `model`, `color`, `skills`, or `whenToUse`.
+- Do **NOT** deduct for missing `SKILL.md`, directory-name matches, or skill-package reference layout when evaluating a standalone agent file.
+- Do deduct for contradictory routing metadata, vague descriptions, mismatched tool surfaces, or host-specific fields that do not match the agent's actual job.
+- If a check truly has no agent analogue, mark it `N/A` in the notes and explain the normalization in the report.
 
 ## Scoring
 
@@ -13,14 +26,18 @@ Special focus on description quality — the most critical field for Skill disco
 
 ## Anthropic Frontmatter Requirements
 
+These rules apply directly to Skill targets. Translate them to the host's equivalent metadata rules when evaluating agent files.
+
 ### `name` field
 
 - Maximum 64 characters
-- Lowercase letters, numbers, and hyphens ONLY
+- Lowercase namespace/name segments separated by `:`. Each segment may contain numbers and hyphens.
 - Cannot contain XML tags
 - Cannot contain reserved words: `"anthropic"`, `"claude"`
+- Final segment should match the directory name
 - Use **gerund form** (verb + -ing): `processing-pdfs`, `analyzing-spreadsheets`, `managing-databases`
 - Acceptable: noun phrases (`pdf-processing`), action-oriented (`process-pdfs`)
+- Namespaced collections are acceptable when the host uses them: `tools:processing-pdfs`, `search:codebase-search`
 - Avoid: vague (`helper`, `utils`, `tools`), overly generic (`documents`, `data`)
 
 ### `description` field

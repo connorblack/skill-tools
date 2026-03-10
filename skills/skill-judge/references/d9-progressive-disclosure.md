@@ -1,6 +1,17 @@
-# D5: Progressive Disclosure (15 points)
+# D9: Progressive Disclosure (15 points)
 
-Does the Skill implement proper content layering?
+Does the artifact implement proper content layering?
+
+## Agent-file adjustment
+
+Standalone agent files can still score well here. Do not penalize an agent just because the host does not use `SKILL.md` bundles.
+
+For agent targets:
+
+- Score layering against the host's real affordances.
+- Reward concise single-file agents when the task is narrow and the structure is easy to scan.
+- Deduct when the file is bloated, repeats the same rule many times, or hides critical reference material with no loading cues.
+- Treat external references as positive only when the agent can discover and use them from the host's actual directory structure.
 
 ## The Three Layers
 
@@ -14,7 +25,7 @@ Layer 2: SKILL.md Body (loaded when triggered)
          Target: < 500 lines, < 5k tokens
 
 Layer 3: Reference Files (loaded on demand)
-         scripts/, reference/, assets/
+         scripts/, references/, assets/
          No context cost until accessed
          Scripts: only OUTPUT enters context (code itself never loaded)
 ```
@@ -52,7 +63,7 @@ Claude loads FORMS.md or REFERENCE.md only when needed.
 ```
 bigquery-skill/
   SKILL.md (overview and navigation)
-  reference/
+  references/
     finance.md (revenue, billing)
     sales.md (opportunities, pipeline)
     product.md (API usage, features)

@@ -1,6 +1,6 @@
-# D8: Practical Usability (15 points)
+# D5: Practical Usability (15 points)
 
-Can an Agent actually use this Skill effectively?
+Can an agent actually use this artifact effectively?
 
 ## Scoring
 

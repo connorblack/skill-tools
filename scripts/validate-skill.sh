@@ -94,34 +94,38 @@ if [ "$NAME_LEN" -lt 1 ] || [ "$NAME_LEN" -gt 64 ]; then
   exit 3
 fi
 
-# Check name pattern: lowercase alphanumeric with hyphens
-# Must not start/end with hyphen, no consecutive hyphens
-if ! echo "$NAME" | grep -qE '^[a-z][a-z0-9]*(-[a-z0-9]+)*$'; then
+# Check name pattern: lowercase alphanumeric segments with optional namespaces
+# Each segment must not start/end with hyphen or contain consecutive hyphens
+NAME_REGEX='^[a-z][a-z0-9]*(-[a-z0-9]+)*(:[a-z][a-z0-9]*(-[a-z0-9]+)*)*$'
+if ! echo "$NAME" | grep -qE "$NAME_REGEX"; then
   # More specific error messages
-  if echo "$NAME" | grep -qE '^-'; then
-    fail "Name cannot start with hyphen: $NAME"
-  elif echo "$NAME" | grep -qE '-$'; then
-    fail "Name cannot end with hyphen: $NAME"
-  elif echo "$NAME" | grep -qE '--'; then
+  if echo "$NAME" | grep -q '::'; then
+    fail "Name cannot contain empty namespace segments: $NAME"
+  elif echo "$NAME" | grep -qE -- '(^-|:-)'; then
+    fail "Name segments cannot start with hyphen: $NAME"
+  elif echo "$NAME" | grep -qE -- '(-$|-:)'; then
+    fail "Name segments cannot end with hyphen: $NAME"
+  elif echo "$NAME" | grep -qE -- '--'; then
     fail "Name cannot contain consecutive hyphens: $NAME"
-  elif echo "$NAME" | grep -qE '[A-Z]'; then
+  elif echo "$NAME" | grep -qE -- '[A-Z]'; then
     fail "Name must be lowercase: $NAME"
-  elif echo "$NAME" | grep -qE '[_]'; then
+  elif echo "$NAME" | grep -qE -- '[_]'; then
     fail "Name cannot contain underscores (use hyphens): $NAME"
   else
-    fail "Name must match pattern ^[a-z][a-z0-9]*(-[a-z0-9]+)*$: $NAME"
+    fail "Name must match pattern $NAME_REGEX: $NAME"
   fi
   exit 3
 fi
 pass "Name '$NAME' valid ($NAME_LEN chars)"
 
-# 5. Check name matches directory
+# 5. Check final name segment matches directory
 DIR_NAME=$(basename "$SKILL_DIR")
-if [ "$NAME" != "$DIR_NAME" ]; then
-  fail "Name '$NAME' does not match directory name '$DIR_NAME'"
+NAME_TAIL="${NAME##*:}"
+if [ "$NAME_TAIL" != "$DIR_NAME" ]; then
+  fail "Final name segment '$NAME_TAIL' does not match directory name '$DIR_NAME'"
   exit 3
 fi
-pass "Name matches directory"
+pass "Final name segment matches directory"
 
 # 6. Validate description field
 # Handle multi-line descriptions

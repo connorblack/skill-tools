@@ -10,7 +10,7 @@ Apply these checks when creating or modifying skills.
 
 ## Quick Checklist
 
-1. Name follows `^[a-z][a-z0-9]*(-[a-z0-9]+)*$`, matches directory
+1. Name follows `^[a-z][a-z0-9]*(-[a-z0-9]+)*(?::[a-z][a-z0-9]*(-[a-z0-9]+)*)*$`; final segment matches directory
 2. Description includes trigger phrases AND negative routing ("Not for X — use Y")
 3. No persona statements, attribution, or decorative quotes
 4. Under 500 lines
